@@ -96,10 +96,10 @@ route.delete('/:id', (req, res)=>{
         if( err ){
             res.send( {success:false, message:err} )
         }else{
-            res.send( {success:false, message:err} )
+            res.send( {success:true, message:'' } )
         }
     });
-
+    
 })
 
 route.patch('/:id', (req, res)=>{
