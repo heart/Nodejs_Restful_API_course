@@ -1,0 +1,96 @@
+const route = require('express').Router()
+const Restaurant = require('./models/restaurant')
+
+route.get('/', (req, res)=>{
+
+    Restaurant.find({}).then( data=>{
+       
+        var restaurants = []
+        data.map( r =>{
+            restaurants.push({
+                id: r._id,
+                name: r.name
+            })
+        } )
+
+        const resData = {
+            success: true,
+            error: "",
+            total: data.length,
+            page: 1,
+            count: data.length,
+            restaurants: restaurants
+        }
+        res.send(resData)
+    })
+
+})
+
+route.get('/:id', (req, res)=>{
+    const data = { 
+        success:true,
+        error:"",
+        name:"ไก่ทอดป้าดา" , 
+        id:"XXAACC", 
+        photo:"a.jpg",
+        totalReview:3,
+        reviews:[
+            { id:"22dd", name:"Heart", score:5, message:"อร่อยมาก"},
+            { id:"22dd", name:"Heart", score:5, message:"อร่อยมาก"},
+            { id:"22dd", name:"Heart", score:5, message:"อร่อยมาก"}
+        ]
+    }
+    res.send(data)
+})
+
+route.post('/', (req, res)=>{
+    const { name } = req.body
+    if(name){
+
+        const restaurant = new Restaurant({
+            owner: '5d0e813e35e84f0043f853ee',
+            name:name
+        })
+
+        restaurant.save().then( data =>{
+            res.send({
+                success: true,
+                message: ''
+            })
+        })
+
+    }else{
+        res.send({
+            success: false,
+            message: 'invalid request data'
+        })
+    }
+})
+
+route.get('/:resturant_id/reviews', (req, res)=>{
+    Restaurant.findOne({_id:req.params.resturant_id})
+    .then( data=>{
+        res.send({
+            success: true,
+            cound: data.reviews.lenght || 0,
+            reviews:data.reviews
+        })
+    })
+})
+
+route.delete('/:id', (req, res)=>{
+    const data = {
+        success: true,
+        error: ""
+    }
+    res.send(data)
+})
+
+route.patch('/:id', (req, res)=>{
+    const data = {
+        success: true,
+        error: ""
+    }
+    res.send(data)
+})
+module.exports = route
