@@ -44,7 +44,7 @@ route.post('/sign_in', (req, res)=>{
     const { username, password } = req.body
 
     if( username, password){
-        User.find(  {username: username}   )
+        User.findOne(  {username: username}   )
         .then( async user =>{
             if(user){
                 const pass = await bcrypt.compareSync(  password  ,  user.password   )
