@@ -32,13 +32,6 @@ route.post('/register', async (req, res)=>{
     }
 })
 
-/* var decoded = jwt.verify(token, 'shhhhh');
-                    
-                    // verify a token symmetric
-                    jwt.verify(token, 'shhhhh', function(err, decoded) {
-                    console.log(decoded.foo) // bar
-                    });*/
-
 route.post('/sign_in', (req, res)=>{
 
     const { username, password } = req.body

@@ -1,5 +1,20 @@
 const route = require('express').Router()
 const Restaurant = require('./models/restaurant')
+const jwt = require('jsonwebtoken'); 
+
+async function verifyToken(req, res, next){
+    jwt.verify( req.body.token, 'nodejs', (err, decoded)=>{
+        if(err){
+            res.send( {
+                success: false, 
+                message:'You dont have permission to access.'
+            })
+        }else{
+            req.user_id = decoded.data.user_id
+            next()
+        }
+    });
+}
 
 route.get('/:review_id', (req, res)=>{
     Restaurant.findOne({'reviews._id':req.params.review_id})

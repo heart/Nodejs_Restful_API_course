@@ -1,5 +1,20 @@
 const route = require('express').Router()
 const Restaurant = require('./models/restaurant')
+const jwt = require('jsonwebtoken');
+
+async function verifyToken(req, res, next){
+    jwt.verify( req.body.token, 'nodejs', (err, decoded)=>{
+        if(err){
+            res.send( {
+                success: false, 
+                message:'You dont have permission to access.'
+            })
+        }else{
+            req.user_id = decoded.data.user_id
+            next()
+        }
+    });
+}
 
 route.get('/', (req, res)=>{
 
@@ -40,12 +55,12 @@ route.get('/:id', (req, res)=>{
     })
 })
 
-route.post('/', (req, res)=>{
+route.post('/',verifyToken , (req, res)=>{
     const { name } = req.body
     if(name){
 
         const restaurant = new Restaurant({
-            owner: '5d0f1cc5ec64210036b8106e',
+            owner: req.user_id,
             name:name
         })
 
