@@ -91,11 +91,15 @@ route.get('/:resturant_id/reviews', (req, res)=>{
 })
 
 route.delete('/:id', (req, res)=>{
-    const data = {
-        success: true,
-        error: ""
-    }
-    res.send(data)
+
+    Restaurant.remove({_id:req.params.id }, (err, data)=>{
+        if( err ){
+            res.send( {success:false, message:err} )
+        }else{
+            res.send( {success:false, message:err} )
+        }
+    });
+
 })
 
 route.patch('/:id', (req, res)=>{
