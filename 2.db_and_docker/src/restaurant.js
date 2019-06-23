@@ -24,26 +24,22 @@ route.get('/', (req, res)=>{
         }
 
         res.send(resData)
-        
+
     })
 
 })
 
 route.get('/:id', (req, res)=>{
-    const data = { 
-        success:true,
-        error:"",
-        name:"ไก่ทอดป้าดา" , 
-        id:"XXAACC", 
-        photo:"a.jpg",
-        totalReview:3,
-        reviews:[
-            { id:"22dd", name:"Heart", score:5, message:"อร่อยมาก"},
-            { id:"22dd", name:"Heart", score:5, message:"อร่อยมาก"},
-            { id:"22dd", name:"Heart", score:5, message:"อร่อยมาก"}
-        ]
-    }
-    res.send(data)
+
+    Restaurant.findOne({_id:req.params.id }).then( data=>{
+        const resData = {
+            success: true,
+            error: "",
+            restaurant: data
+        }
+
+        res.send(resData)
+    })
 })
 
 route.post('/', (req, res)=>{
