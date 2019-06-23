@@ -58,4 +58,17 @@ route.patch('/:id', (req, res)=>{
     }
     res.send(data)
 })
+
+route.patch('/:id/review', (req, res)=>{
+    const id = req.params.id
+    const data = {
+        success: true,
+        error: ""
+    }
+    res.send(data)
+})
+
+localhost:3000/restaurant/12345/
+
+
 module.exports = route

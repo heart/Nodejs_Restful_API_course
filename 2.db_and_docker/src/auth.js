@@ -1,13 +1,19 @@
 const route = require('express').Router()
 const User = require('./models/user')
 
-route.post('/register', (req, res)=>{
+const bcrypt = require('bcrypt');
+
+
+route.post('/register', async (req, res)=>{
     const { name, username, password } = req.body
     if(name, username, password){
+
+        const hashPassword = await bcrypt.hashSync(password, 5);
+        
         const user = new User({
             name: name,
             username: username,
-            password: password
+            password: hashPassword
         })
 
         user.save().then( data =>{
@@ -26,8 +32,26 @@ route.post('/register', (req, res)=>{
 })
 
 route.post('/sign_in', (req, res)=>{
-    const data =  { success:true, message:"" }
-    res.send(data)
+
+    const { username, password } = req.body
+
+    if( username, password){
+        User.find(  {username: username}   )
+        .then( async user =>{
+            if(user){
+                const pass = await bcrypt.compareSync(  password  ,  user.password   )
+                if(pass){
+                    
+                }else{
+
+                }
+            }
+        })
+
+    }
+
+    // const data =  { success:true, message:"" }
+    // res.send(data)
 })
 
 route.get('/sign_out', (req, res)=>{

@@ -14,12 +14,12 @@ const reviewSchema = mongoose.Schema({
     }
 })
 
-const schema = mongoose.Schema({
+const restaurantSchema = mongoose.Schema({
     name: String,
     reviews:[reviewSchema],
     owner: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: User
     },
     create_at:{
         type: Date,
@@ -27,4 +27,6 @@ const schema = mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('Restaurant', schema )
+const model = mongoose.model('Restaurant', restaurantSchema )
+
+module.exports = model

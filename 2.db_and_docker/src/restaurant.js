@@ -4,8 +4,9 @@ const Restaurant = require('./models/restaurant')
 route.get('/', (req, res)=>{
 
     Restaurant.find({}).then( data=>{
-       
+        
         var restaurants = []
+
         data.map( r =>{
             restaurants.push({
                 id: r._id,
@@ -21,7 +22,9 @@ route.get('/', (req, res)=>{
             count: data.length,
             restaurants: restaurants
         }
+
         res.send(resData)
+        
     })
 
 })
@@ -48,7 +51,7 @@ route.post('/', (req, res)=>{
     if(name){
 
         const restaurant = new Restaurant({
-            owner: '5d0e813e35e84f0043f853ee',
+            owner: '5d0f1cc5ec64210036b8106e',
             name:name
         })
 

@@ -10,10 +10,10 @@ services:
       - "80:3000"
     volumes:
       - ./:/home/node/app
-    links:
-      - mongo-admin
     environment:
       - MONGO_SERVER=mongodb://mongo-db:27017
+    depends_on: 
+      - mongo-db
   mongo-db:
     container_name: mongo-db
     image: mongo
@@ -31,6 +31,8 @@ services:
       - ME_CONFIG_MONGODB_ADMINPASSWORD=admin
     links:
       - mongo-db:mongo
+    depends_on: 
+      - mongo-db
 
 
     

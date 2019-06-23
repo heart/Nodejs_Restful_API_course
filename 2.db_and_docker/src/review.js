@@ -19,7 +19,7 @@ route.post('/:resturant_id', (req, res)=>{
     Restaurant.findOneAndUpdate(
         {_id: req.params.resturant_id },
         {$push: {'reviews': { 
-            user: '5d0e813e35e84f0043f853ee',
+            user: '5d0f1cc5ec64210036b8106e',
             comment: comment,
             score: score
         }}}
