@@ -3,6 +3,7 @@ const User = require('./models/user')
 
 const bcrypt = require('bcrypt');
 
+const jwt = require('jsonwebtoken');
 
 route.post('/register', async (req, res)=>{
     const { name, username, password } = req.body
@@ -31,6 +32,13 @@ route.post('/register', async (req, res)=>{
     }
 })
 
+/* var decoded = jwt.verify(token, 'shhhhh');
+                    
+                    // verify a token symmetric
+                    jwt.verify(token, 'shhhhh', function(err, decoded) {
+                    console.log(decoded.foo) // bar
+                    });*/
+
 route.post('/sign_in', (req, res)=>{
 
     const { username, password } = req.body
@@ -41,9 +49,23 @@ route.post('/sign_in', (req, res)=>{
             if(user){
                 const pass = await bcrypt.compareSync(  password  ,  user.password   )
                 if(pass){
-                    
-                }else{
 
+                    const userData = { user_id: user._id }
+
+                    const token = await jwt.sign({
+                        data: userData
+                      }, 'nodejs', { expiresIn: '1h' });
+                   
+                    res.send( {
+                        success: true,
+                        message:'',
+                        token:token
+                    })
+                }else{
+                    res.send( {
+                        success: false,
+                        message:'Invalid username or password'
+                    })
                 }
             }
         })

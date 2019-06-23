@@ -30,14 +30,12 @@ route.get('/', (req, res)=>{
 })
 
 route.get('/:id', (req, res)=>{
-
     Restaurant.findOne({_id:req.params.id }).then( data=>{
         const resData = {
             success: true,
             error: "",
             restaurant: data
         }
-
         res.send(resData)
     })
 })
